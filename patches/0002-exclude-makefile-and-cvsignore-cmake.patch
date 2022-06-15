@@ -1,0 +1,11 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -94,6 +94,8 @@
+   PATTERN ".svn" EXCLUDE
+   PATTERN "*.am" EXCLUDE
+   PATTERN "*.in" EXCLUDE
++  PATTERN "Makefile" EXCLUDE
++  PATTERN ".cvsignore" EXCLUDE
+   )
+ 
+ INSTALL (
