@@ -29,7 +29,7 @@ and other destinations. It is modeled after the Log for Java library
     return cmake
 
   def build(self):
-    self.run("cd log4cpp && ./autogen.sh && ./configure");
+    self.run("./autogen.sh && ./configure", cwd="log4cpp");
     cmake = self._configure_cmake()
     cmake.build()
 
