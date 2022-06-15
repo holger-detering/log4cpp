@@ -18,14 +18,18 @@ and other destinations. It is modeled after the Log for Java library
 
     def source(self):
         self.run("git clone https://git.code.sf.net/p/log4cpp/codegit log4cpp")
-        # self.run("git clone https://github.com/orocos-toolchain/log4cpp.git")
 
     def _configure_cmake(self):
         cmake = CMake(self)
         cmake.configure(source_folder="log4cpp")
         return cmake
 
+    def build_requirements(self):
+        if self.settings.os == "Linux":
+            self.tool_requires("libtool/[>=2.4.6]@")
+
     def build(self):
+        self.run("cd log4cpp && ./autogen.sh && ./configure");
         cmake = self._configure_cmake()
         cmake.build()
 
