@@ -6,6 +6,7 @@ from conans import ConanFile, CMake, tools
 class Log4cppTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
+    requires = "log4cpp/1.1.3@"
 
     def build(self):
         cmake = CMake(self)
@@ -22,4 +23,4 @@ class Log4cppTestConan(ConanFile):
     def test(self):
         if not tools.cross_building(self):
             os.chdir("bin")
-            self.run(".%sexample" % os.sep)
+            self.run(".%spackage_test" % os.sep)
