@@ -1,0 +1,15 @@
+--- a/CMakeLists.txt	2022-06-15 16:27:29.409189776 +0200
++++ b/CMakeLists.txt	2022-06-15 18:12:02.281769199 +0200
+@@ -90,10 +90,11 @@
+ INSTALL (
+   DIRECTORY include/log4cpp
+   DESTINATION include
+-  PATTERN "config.h" EXCLUDE
+   PATTERN ".svn" EXCLUDE
+   PATTERN "*.am" EXCLUDE
+   PATTERN "*.in" EXCLUDE
++  PATTERN "Makefile" EXCLUDE
++  PATTERN ".cvsignore" EXCLUDE
+   )
+
+ INSTALL (
