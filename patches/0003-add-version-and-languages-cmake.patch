@@ -2,7 +2,7 @@
 +++ b/CMakeLists.txt	2022-06-15 18:21:32.890541176 +0200
 @@ -11,7 +11,9 @@
  
- cmake_minimum_required(VERSION 3.22)
+ cmake_minimum_required(VERSION 3.18)
  
 -PROJECT ( LOG4CPP )
 +PROJECT ( LOG4CPP
