@@ -39,6 +39,6 @@ and other destinations. It is modeled after the Log for Java library
 
   def package_info(self):
     self.cpp_info.libs = ["log4cpp"]
-#        if self.settings.os == "Linux":
-#            self.cpp_info.libs.append("pthread")
+    if self.settings.os == "Linux":
+      self.cpp_info.libs.append("pthread")
 
