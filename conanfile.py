@@ -20,7 +20,8 @@ and other destinations. It is modeled after the Log for Java library
   tool_requires = "libtool/[>=2.4.6]"
 
   def source(self):
-    self.run("git clone https://git.code.sf.net/p/log4cpp/codegit log4cpp")
+    url = f"https://downloads.sourceforge.net/project/log4cpp/log4cpp-1.1.x%20%28new%29/log4cpp-1.1/log4cpp-{self.version}.tar.gz"
+    tools.get(url, sha1="74f0fea7931dc1bc4e5cd34a6318cd2a51322041", md5="b9e2cee932da987212f2c74b767b4d8b")
     for patch in self.conan_data.get("patches", {}).get(self.version, []):
       tools.patch(**patch)
 
