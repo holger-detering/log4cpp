@@ -16,7 +16,7 @@ and other destinations. It is modeled after the Log for Java library
   default_options = {"shared": True}
   generators = "cmake"
   exports_sources = "patches/*.patch"
-  tool_requires = "libtool/[>=2.4.6]@"
+  tool_requires = "libtool/[>=2.4.6]"
 
   def source(self):
     self.run("git clone https://git.code.sf.net/p/log4cpp/codegit log4cpp")
@@ -38,7 +38,10 @@ and other destinations. It is modeled after the Log for Java library
     cmake.install()
 
   def package_info(self):
-    self.cpp_info.libs = ["log4cpp"]
+    if self.settings.build_type == "Debug":
+      self.cpp_info.libs = ["log4cppD"]
+    else:
+      self.cpp_info.libs = ["log4cpp"]
     if self.settings.os == "Linux":
       self.cpp_info.libs.append("pthread")
 
