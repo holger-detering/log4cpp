@@ -4,8 +4,9 @@ class Log4cppConan(ConanFile):
   name = "log4cpp"
   version = "1.1.3"
   license = "LGPL-2.1-or-later"
-  author = "Bastiaan Bakker <bastiaan.bakker@lifeline.nl>"
-  url = "https://sourceforge.net/projects/log4cpp/"
+  author = "Holger Detering <freelance@detering-springhoe.de>"
+  url = "https://github.com/holger-detering/log4cpp"
+  homepage = "https://sourceforge.net/projects/log4cpp"
   description = """\
 A library of C++ classes for flexible logging to files (rolling), syslog, IDSA
 and other destinations. It is modeled after the Log for Java library
