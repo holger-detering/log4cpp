@@ -14,8 +14,10 @@ and other destinations. It is modeled after the Log for Java library
 (http://www.log4j.org), staying as close to their API as is reasonable."""
   topics = ("c++", "logging")
   settings = "os", "compiler", "build_type", "arch"
+  options = {"shared": [True, False]}
+  default_options = {"shared": True}
   generators = "cmake"
-  exports_sources = "patches/*.patch", "sources/*.tar.gz"
+  exports_sources = "patches/*.patch", f"sources/log4cpp-{version}.tar.gz"
   tool_requires = "libtool/[>=2.4.6]"
 
   def _fetch_sources(self):
