@@ -1,5 +1,6 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake, cmake_layout
+from conan.tools.cmake import CMake
+from conan.tools.layout import cmake_layout
 from conan.tools.files import apply_conandata_patches, check_md5, check_sha1, get, unzip
 
 import os
