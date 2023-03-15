@@ -1,5 +1,5 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
+from conan.tools.cmake import CMake, cmake_layout
 from conan.tools.files import apply_conandata_patches, check_md5, check_sha1, get, unzip
 
 import os
@@ -19,18 +19,13 @@ and other destinations. It is modeled after the Log for Java library
   settings = "os", "compiler", "build_type", "arch"
   options = {"shared": [True, False]}
   default_options = {"shared": True}
+  generators = "CMakeDeps", "CMakeToolchain"
   exports_sources = "patches/*.patch", f"sources/log4cpp-{version}.tar.gz"
   tool_requires = "libtool/[>=2.4.6]"
   # todo: cmake >= 3.23?
 
   def layout(self):
     cmake_layout(self)
-
-  def generate(self):
-    deps = CMakeDeps(self)
-    deps.generate()
-    tc = CMakeToolchain(self)
-    tc.generate()
 
   def _fetch_sources(self):
     tarball_name = f"log4cpp-{self.version}.tar.gz"
