@@ -1,5 +1,8 @@
-from conans import ConanFile, CMake, tools
-import os.path
+from conan import ConanFile
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain, cmake_layout
+from conan.tools.files import apply_conandata_patches, check_md5, check_sha1, get, unzip
+
+import os
 
 class Log4cppConan(ConanFile):
   name = "log4cpp"
@@ -16,9 +19,18 @@ and other destinations. It is modeled after the Log for Java library
   settings = "os", "compiler", "build_type", "arch"
   options = {"shared": [True, False]}
   default_options = {"shared": True}
-  generators = "cmake"
   exports_sources = "patches/*.patch", f"sources/log4cpp-{version}.tar.gz"
   tool_requires = "libtool/[>=2.4.6]"
+  # todo: cmake >= 3.23?
+
+  def layout(self):
+    cmake_layout(self)
+
+  def generate(self):
+    deps = CMakeDeps(self)
+    deps.generate()
+    tc = CMakeToolchain(self)
+    tc.generate()
 
   def _fetch_sources(self):
     tarball_name = f"log4cpp-{self.version}.tar.gz"
@@ -26,24 +38,24 @@ and other destinations. It is modeled after the Log for Java library
     source_path = "sources/" + tarball_name
     checksums = self.conan_data["checksums"][self.version][0]
     if os.path.isfile(source_path):
-      tools.check_sha1(source_path, checksums["sha1"])
-      tools.check_md5(source_path, checksums["md5"])
-      tools.unzip(source_path)
+      check_sha1(self, source_path, checksums["sha1"])
+      check_md5(self, source_path, checksums["md5"])
+      unzip(self, source_path)
     else:
-      tools.get(url, sha1=checksums["sha1"], md5=checksums["md5"], verify=False)
+      get(self, url, sha1=checksums["sha1"], md5=checksums["md5"], verify=False)
 
   def source(self):
     self._fetch_sources()
-    for patch in self.conan_data["patches"][self.version]:
-      tools.patch(**patch)
+    apply_conandata_patches(self)
 
   def _configure_cmake(self):
     cmake = CMake(self)
-    cmake.configure(source_folder="log4cpp")
+    cmake.configure(build_script_folder="log4cpp")
     return cmake
 
   def build(self):
-    self.run("./autogen.sh && ./configure", cwd="log4cpp");
+    self.run("./autogen.sh && ./configure",
+             cwd=os.path.join(self.folders.base_source,"log4cpp"))
     cmake = self._configure_cmake()
     cmake.build()
 
