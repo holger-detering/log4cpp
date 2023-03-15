@@ -64,4 +64,4 @@ and other destinations. It is modeled after the Log for Java library
     else:
       self.cpp_info.libs = ["log4cpp"]
     if self.settings.os == "Linux":
-      self.cpp_info.libs.append("pthread")
+      self.cpp_info.system_libs.append("pthread")

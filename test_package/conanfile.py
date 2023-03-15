@@ -1,11 +1,19 @@
-import os
+from conan import ConanFile
+from conan.tools.cmake import CMake,cmake_layout
+from conan.tools.build import can_run
 
-from conans import ConanFile, CMake, tools
+import os
 
 class Log4cppTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake"
-    requires = "log4cpp/1.1.3@"
+    generators = "CMakeDeps", "CMakeToolchain"
+    #requires = "log4cpp/1.1.3@"
+
+    def requirements(self):
+        self.requires(self.tested_reference_str)
+
+    def layout(self):
+        cmake_layout(self)
 
     def build(self):
         cmake = CMake(self)
@@ -13,6 +21,7 @@ class Log4cppTestConan(ConanFile):
         cmake.build()
 
     def test(self):
-        if not tools.cross_building(self):
+        if not can_run(self):
             os.chdir("bin")
-            self.run(".%spackage_test" % os.sep)
+            cmd = os.path.join(self.cpp.build.bindir, "package_test")
+            self.run(cmd, env="conanrun")
